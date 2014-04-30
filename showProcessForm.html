@@ -1,0 +1,102 @@
+<html>
+<head>
+    <title>Test rest</title>
+    <script src="js/jbpm-rest-integration.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        // Create a new instance to manage the interaction with the form
+        var jbpmRestAPI = new jbpmRestAPI();
+
+        // This function will load the process form specified on the inputs on the given div
+        function showStartProcessForm(divId) {
+            // obtain all the data needed to load the form
+            var hostUrl = document.getElementById('url').value;
+            var deploymentId = document.getElementById('deploymentId').value;
+            var processId = document.getElementById('processId').value;
+
+            // callback function that will show the start process button if the form is loaded
+            var onsuccess = function (msg) {
+                showHideProcessButtons('block')
+            }
+
+            // callback function that will be executed if an error occurs obtainging the form.
+            // this function will receive the server response and will open an alert showing it.
+            var onerror = function (msg) {
+                alert("something wrong happened: " + msg);
+                // cleaning the container div & reseting the object status
+                jbpmRestAPI.clearContainer(divId);
+            }
+
+            // calling the method to load the form!
+            jbpmRestAPI.showStartProcessForm(hostUrl, deploymentId, processId, divId, onsuccess, onerror);
+        }
+
+        // This function will submit the form and start the process on the given div
+        function startProcess(divId) {
+
+            // callback function that will be called after the process is started
+            var onsuccess= function(msg) {
+                // notifying that the process is started
+                alert("Started Process");
+                // cleaning the container div & reseting the api
+                jbpmRestAPI.clearContainer(divId);
+                // hiding the buttons
+                showHideProcessButtons('none');
+            }
+
+            // callback function that will be executed if an error occurs obtainging the form.
+            // this function will receive the server response and will open an alert showing it.
+            var onerror = function(msg) {
+                alert("Error starting process: " + msg);
+                // cleaning the container div & reseting the object status
+                jbpmRestAPI.clearContainer(divId);
+                // hiding the buttons
+                showHideProcessButtons('none');
+            }
+            jbpmRestAPI.startProcess(divId, onsuccess, onerror);
+        }
+
+        // function to show/hide the start process button
+        function showHideProcessButtons(action) {
+            document.getElementById("processbuttons").style.display = action;
+        }
+
+    </script>
+</head>
+
+<body>
+<div style="padding-bottom: 15px;">
+    Example of how to embedd a start process form
+</div>
+<table border="0">
+    <tr>
+        <td>DeploymentId: </td>
+        <td><input name="deploymentId" id="deploymentId" value="org.jbpm:HR:1.0"></td>
+    </tr>
+    <tr>
+        <td>ProcessId: </td>
+        <td><input name="processId" id="processId" value="hiring"></td>
+    </tr>
+    <tr>
+        <td>Server URL: </td>
+        <td><input name="url" id="url" value="http://localhost:8080/kie-wb/"></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            Fill the inputs with your app data and press the "show process form" to start.
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="button" value="show process form" onclick="showStartProcessForm('formdiv')">
+        </td>
+    </tr>
+</table>
+
+<div id="formdiv" style="width: 400px; height: 400px; border: solid black 1px;">This is the div where the form will be shown!</div>
+<div id="processbuttons" style="display: none;">
+    <input type="button" value="Start Process!" onclick="startProcess('formdiv')"/>
+</div>
+</body>
+
+</html>

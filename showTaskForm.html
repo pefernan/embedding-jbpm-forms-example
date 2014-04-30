@@ -1,0 +1,145 @@
+<html>
+<head>
+    <title>Test rest</title>
+    <script src="js/jbpm-rest-integration.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        // Create a new instance to manage the interaction with the form
+        var jbpmRestAPI = new jbpmRestAPI();
+
+        // This function will load the task form on the given div
+        function showTaskForm(divId) {
+            // Obtaining the data needed from the inputs
+            var hostUrl = document.getElementById('url').value;
+            var taskId = document.getElementById('taskId').value;
+
+            // Callback that is going to execute if the task form is loaded
+            var onsuccess = function (msg) {
+                showHideTaskButtons('block')
+            }
+
+            // callback function that will be executed if an error occurs obtainging the form.
+            // this function will receive the server response and will open an alert showing it.
+            var onerror = function (msg) {
+                alert("something wrong happened: " + msg);
+                // cleaning the container div & reseting the object status
+                jbpmRestAPI.clearContainer(divId);
+            }
+
+            jbpmRestAPI.showTaskForm(hostUrl, taskId, divId, onsuccess, onerror);
+        }
+
+        // This function will claim the task which form is being shown on the current div
+        function claimTask(divId) {
+            var onsuccess= function(msg) {
+                alert("Task claimed");
+            }
+
+            var onerror = function(msg) {
+                alert("Error claiming task: " + msg);
+                jbpmRestAPI.clearContainer(divId);
+            }
+            jbpmRestAPI.claimTask(divId, onsuccess, onerror)
+        }
+
+        // This function will start the task which form is being shown on the current div
+        function startTask(divId) {
+            var onsuccess= function(msg) {
+                alert("Task Started");
+            }
+
+            var onerror = function(msg) {
+                alert("Error starting task: " + msg);
+                jbpmRestAPI.clearContainer(divId);
+            }
+            jbpmRestAPI.startTask(divId, onsuccess, onerror)
+        }
+
+        // This function will release the task which form is being shown on the current div
+        function releaseTask(divId) {
+            var onsuccess= function(msg) {
+                jbpmRestAPI.clearContainer(divId);
+                showHideTaskButtons('none');
+            }
+
+            var onerror = function(msg) {
+                alert("Error releasing task: " + msg);
+                jbpmRestAPI.clearContainer(divId);
+            }
+            jbpmRestAPI.releaseTask(divId, onsuccess, onerror)
+        }
+
+        // This function will submit the form and save the task state which form is being shown on the current div
+        function saveTask(divId) {
+            var onsuccess= function(msg) {
+                alert("Saved Task");
+                jbpmRestAPI.clearContainer(divId);
+                showHideTaskButtons('none');
+            }
+
+            var onerror = function(msg) {
+                alert("Error saving task: " + msg);
+                jbpmRestAPI.clearContainer(divId);
+                showHideTaskButtons('none');
+            }
+            jbpmRestAPI.saveTask(divId, onsuccess, onerror)
+        }
+
+        // This function will submit the form and complete the task which form is being shown on the current div
+        function completeTask(divId) {
+            var onsuccess= function(msg) {
+                alert("Completed Task");
+                jbpmRestAPI.clearContainer(divId);
+                showHideTaskButtons('none');
+            }
+
+            var onerror = function(msg) {
+                alert("Error completing task: " + msg);
+                jbpmRestAPI.clearContainer(divId);
+                showHideTaskButtons('none');
+            }
+            jbpmRestAPI.completeTask(divId, onsuccess, onerror)
+        }
+
+        function showHideTaskButtons(action) {
+            document.getElementById("taskbuttons").style.display = action;
+        }
+    </script>
+</head>
+
+<body>
+<div style="padding-bottom: 15px;">
+    Example of how to embedd a task form
+</div>
+    <table>
+        <tr>
+            <td>TaskId: </td>
+            <td><input name="taskId" id="taskId" value="1"></td>
+        </tr>
+        <tr>
+            <td>Server URL: </td>
+            <td><input name="url" id="url" value="http://localhost:8080/kie-wb/"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                Fill the inputs with your app data and press the "show task form" to start.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="button" value="show task form" onclick="showTaskForm('formdiv')">
+            </td>
+        </tr>
+    </table>
+
+    <div id="formdiv" style="width: 400px; height: 400px; border: solid black 1px;">This is the div where the form will be shown!</div>
+    <div id="taskbuttons" style="display: none;">
+        <input type="button" value="Claim Task" onclick="claimTask('formdiv');"/>
+        <input type="button" value="Start Task" onclick="startTask('formdiv');"/>
+        <input type="button" value="Release Task" onclick="releaseTask('formdiv');"/>
+        <input type="button" value="Save Task" onclick="saveTask('formdiv');"/>
+        <input type="button" value="Complete Task" onclick="completeTask('formdiv');"/>
+    </div>
+</body>
+
+</html>
