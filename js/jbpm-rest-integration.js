@@ -215,5 +215,3 @@ function jbpmRestAPI() {
         }
     }
 };
-
-var jbpmRestAPI = new jbpmRestAPI();
