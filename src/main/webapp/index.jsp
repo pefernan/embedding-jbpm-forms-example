@@ -33,12 +33,8 @@
             response.sendRedirect("login.jsp");
         } else {
     %>
-    <div class="navbar navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="nav pull-right">
-                <p class="navbar-text" style="padding-right: 20px;o "><b>Hi katy (<a href="logout.jsp" class="navbar-link">logout</a>)</b></p>
-            </div>
-        </div>
+    <div class="nav pull-right">
+        <p class="navbar-text" style="padding-right: 20px;"><b>Hi katy (<a href="logout.jsp" class="navbar-link">logout</a>)</b></p>
     </div>
     <div class="tabbable">
         <ul class="nav nav-tabs" id="myTabs">

@@ -37,6 +37,12 @@
                         rows = row + rows;
                     });
 
+                    // if a task is being shown on the screen refresh buttons
+                    if (currentTask) {
+                        currentTask = tasks[currentTask.taskId];
+                        showHideActions(currentTask.status);
+                    }
+
                     table += rows + '</table>'
                     $("#listcontainer").html(table);
                 },
@@ -78,7 +84,7 @@
             showHideActions(currentTask.status)
         }
 
-        var onerror = function () {
+        var onerror = function (msg) {
             alert("Error showing task form: " + msg);
             jBPMFormAPI.clearContainer("formcontainer");
             $("#formcontainer").hide();
@@ -90,15 +96,14 @@
         }
     }
 
-    function defaultSuccessCallback() {
+    function defaultSuccessCallback(msg) {
+        alert(msg);
         var taskId = currentTask.taskId;
         loadTaskList();
-        currentTask = tasks[taskId];
-        showHideActions(currentTask.status);
     }
     
-    function defaultErrorCallback() {
-        alert("Error execution action: " + msg);
+    function defaultErrorCallback(msg) {
+        alert(msg);
         jBPMFormAPI.clearContainer("formcontainer");
         $("#formcontainer").hide();
         showHideActions();
@@ -124,18 +129,22 @@
         if (currentTask) {
             var doRelease = confirm("Are you sure that you want to release the task?");
             if (doRelease) {
-                var onsuccess= function() {
+                var onsuccess= function(msg) {
                     jBPMFormAPI.clearContainer("formcontainer");
                     currentTask = null;
                     $("#formcontainer").hide();
                     showHideActions();
                     loadTaskList();
-                    alert("Released task!");
+                    alert(msg);
                 }
 
                 var onerror = function(msg) {
-                    alert("Error releasing task: " + msg);
-                    onsuccess();
+                    jBPMFormAPI.clearContainer("formcontainer");
+                    currentTask = null;
+                    $("#formcontainer").hide();
+                    showHideActions();
+                    loadTaskList();
+                    alert(msg);
                 }
                 jBPMFormAPI.releaseTask("formcontainer", onsuccess, onerror)
             }
@@ -144,18 +153,22 @@
 
     // This function will submit the form and complete the task
     function completeTask() {
-        var onsuccess= function() {
+        var onsuccess= function(msg) {
             jBPMFormAPI.clearContainer("formcontainer");
             currentTask = null;
             $("#formcontainer").hide();
             showHideActions();
             loadTaskList();
-            alert("Completed Task");
+            alert(msg);
         }
 
         var onerror = function(msg) {
-            alert("Error completing task: " + msg);
-            onsuccess();
+            jBPMFormAPI.clearContainer("formcontainer");
+            currentTask = null;
+            $("#formcontainer").hide();
+            showHideActions();
+            loadTaskList();
+            alert(msg);
         }
         if (currentTask) jBPMFormAPI.completeTask("formcontainer", onsuccess, onerror)
     }

@@ -8,8 +8,13 @@ function jbpmRestAPI() {
         if (lastConfig) {
             if (!lastConfig.host.startsWith(event.origin)) return;
 
-            if (event.data == 'success' && lastConfig.onsuccess) lastConfig.onsuccess(event.data);
-            else if (lastConfig.onerror) lastConfig.onerror(event.data);
+            try {
+                var response = JSON.parse(event.data)
+                if (response.status == 'success' && lastConfig.onsuccess) lastConfig.onsuccess(response.message);
+                else if (lastConfig.onerror) lastConfig.onerror(response.message);
+            } catch (e) {
+                if (lastConfig.onerror) lastConfig.onerror(event.data);
+            }
         }
     }
 
@@ -159,7 +164,11 @@ function jbpmRestAPI() {
     var postAction = function(config, action, onsuccess, onerror) {
         if (config && action) {
             var frame = document.getElementById(config.containerId + '_form').contentWindow;
-            frame.postMessage(action, config.formURL);
+
+            var request = '{"action":"'+ action + '",';
+            if (config.isProcess) request+= '"processId":"' + config.processId + '", "domainId":"' + config.deploymentId +'"}';
+            else request+= '"taskId":"' + config.taskId + '"}';
+            frame.postMessage(request, config.formURL);
             lastConfig = config;
             if (onsuccess) lastConfig.onsuccess = onsuccess;
             if (onerror) lastConfig.onerror = onerror;
@@ -172,6 +181,7 @@ function jbpmRestAPI() {
             host: hostUrl,
             url: hostUrl + "rest/task/" + taskId + "/showTaskForm",
             isProcess: false,
+            taskId: taskId,
             formURL: null,
             onsuccess: function (responseText) {
                 var xmlDoc = getXMLDoc(responseText);

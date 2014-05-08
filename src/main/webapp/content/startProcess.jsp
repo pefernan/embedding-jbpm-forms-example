@@ -46,14 +46,14 @@
 
     function startProcess() {
         var onsuccess= function(msg) {
-            alert("Started Process");
+            alert(msg);
             $("#startProcessDiv").hide();
             $("#startProcessAction").hide();
             jBPMFormAPI.clearContainer("startProcessDiv");
         }
 
         var onerror = function(msg) {
-            alert("Error starting process: " + msg);
+            alert(msg);
             $("#startProcessDiv").hide();
             $("#startProcessAction").hide();
             jBPMFormAPI.clearContainer("startProcessDiv");
