@@ -3,6 +3,6 @@ How to embedd jBPM Forms on client applications
 
 This is a example of how to embed forms on client applications. 
 
-Please put this html files inside your KIE Workbench war to test it.
+Please build build this war and place it on your application server with a kie-wb war to test it.
 
 
