@@ -13,31 +13,6 @@
             background-color: #ffffff;
         }
 
-        li {
-            list-style: none;
-        }
-
-        #dummy {
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-bottom: solid 3px #777973;
-            height: 250px;
-            width: 100%;
-            z-index: 1;
-        }
-
-        #dummy2 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-bottom: solid 2px #545551;
-            height: 252px;
-            width: 100%;
-            background: transparent;
-            z-index: 2;
-        }
-
         #login-wrapper {
             margin: 0 0 0 -160px;
             width: 320px;
@@ -50,6 +25,13 @@
 
         #login-content {
             margin-top: 120px;
+            border: solid 1px;
+            -moz-border-radius: 8px;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
         }
 
         label {
@@ -67,14 +49,13 @@
             -webkit-border-radius: 4px;
             border-radius: 4px;
             background: #fff;
-            border: solid 1px transparent;
+            border: solid 1px;
             color: #555;
             padding: 8px;
             font-size: 13px;
         }
 
         input.button {
-            float: right;
             padding: 6px 10px;
             color: #fff;
             font-size: 14px;
@@ -109,7 +90,6 @@
     </style>
 </head>
 <body id="login">
-
 <div id="login-wrapper">
 
     <div id="login-content">
@@ -117,13 +97,12 @@
         String message = request.getParameter("message");
         if (!StringUtils.isEmpty(message)) {
         %>
-        <h3><%=message%></h3>
+        <div class="error">
+            <h3><%=message%></h3>
+        </div>
         <%
             }
         %>
-        <c:if test="${param.message != null}">
-            <h3><c:out value="${param.message}"/></h3>
-        </c:if>
         <form action="j_security_check" method="POST">
             <p>
                 <label for="j_username">Username</label>
@@ -144,7 +123,5 @@
         </form>
     </div>
 </div>
-<div id="dummy"></div>
-<div id="dummy2"></div>
 </body>
 </html>
