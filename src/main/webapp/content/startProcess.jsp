@@ -66,7 +66,7 @@
         <select name="process" id="process">
             <option value="human-resources" selected>Human Resources</option>
         </select>
-        <input type="button" class="btn" value="Start Process" onclick="showStartProcessForm()">
+        <input type="button" class="btn" value="Show Start Form" onclick="showStartProcessForm()">
     </form>
     <div id="startProcessDiv" style="display: none; max-height: 400px; max-width: 400px;"></div>
     <div id="startProcessAction" style="display: none;">
