@@ -1,4 +1,4 @@
-function jbpmRestAPI() {
+function jBPMFormsAPI() {
 
     var configs = new Object();
     var lastConfig;

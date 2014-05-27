@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    if (!window.jBPMFormAPI) window.jBPMFormAPI = new jbpmRestAPI();
+    if (!window.jBPMFormAPI) window.jBPMFormAPI = new jBPMFormsAPI();
 
     var hostURL = "http://localhost:8080/kie-wb/";
 

@@ -7,7 +7,7 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jbpm-rest-integration.js"></script>
+    <script type="text/javascript" src="js/jbpm-forms-rest-integration.js"></script>
     <script type="text/javascript">
         $(function() {
             var baseURL = '<%=request.getContextPath()%>/content/';
