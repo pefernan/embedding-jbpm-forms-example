@@ -1,6 +1,6 @@
 <script type="text/javascript">
     if (!window.jBPMFormAPI) window.jBPMFormAPI = new jBPMFormsAPI();
-    var hostURL = "http://localhost:8080/kie-wb/";
+    var hostURL = "http://localhost:8080/kie-wb";
     var tasks;
     var currentTask;
     function loadTaskList() {
