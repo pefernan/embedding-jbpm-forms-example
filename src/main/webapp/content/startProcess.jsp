@@ -5,8 +5,12 @@
 
     var processes = new Object();
 
-    processes["human-resources"] = {
+    processes["HR"] = {
         deploymentId: "org.jbpm:HR:1.0",
+        processId: "hiring"
+    };
+    processes["human-resources"] = {
+        deploymentId: "org.jbpm:human-resources:1.0",
         processId: "hiring"
     };
 
@@ -64,6 +68,7 @@
 <div>
     <form class="navbar-form pull-left">
         <select name="process" id="process">
+            <option value="HR" selected>HR</option>
             <option value="human-resources" selected>Human Resources</option>
         </select>
         <input type="button" class="btn" value="Show Start Form" onclick="showStartProcessForm()">
