@@ -34,7 +34,7 @@
         } else {
     %>
     <div class="nav pull-right">
-        <p class="navbar-text" style="padding-right: 20px;"><b>Hi katy (<a href="logout.jsp" class="navbar-link">logout</a>)</b></p>
+        <p class="navbar-text" style="padding-right: 20px;"><b>Hi <%=login%> (<a href="logout.jsp" class="navbar-link">logout</a>)</b></p>
     </div>
     <div class="tabbable">
         <ul class="nav nav-tabs" id="myTabs">
